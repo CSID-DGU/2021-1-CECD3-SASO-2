@@ -8,18 +8,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class Sungyesa implements WebpageI{
+public class Sungyesa implements WebpageI {
     private String baseUrl = "https://sungyesa.com";
-
     private ArrayList<Document> documents = new ArrayList<>();
     private ArrayList<String> urls = new ArrayList<>();
-    private ArrayList<String> reviews = new ArrayList<>();
-    private ArrayList<HashMap<String, Integer>> stars = new ArrayList<>();
+    private ArrayList<Review> reviews = new ArrayList<>();
 
     public Sungyesa() {
-        setConnectUrl(23334,23335);
+        setConnectUrl(1, 100);
         connect();
         scraping();
+
     }
 
     // 연결할 Url을 설정하는 함수, [1, idRange] 범위까지 페이지 url을 설정한다.
@@ -29,9 +28,9 @@ public class Sungyesa implements WebpageI{
         }
     }
 
-    private void connect()  {
+    private void connect() {
         for (String url : this.urls) {
-            try{
+            try {
                 Document doc = Jsoup.connect(url).get();
                 documents.add(doc);
             } catch (IOException exception) {
@@ -41,37 +40,55 @@ public class Sungyesa implements WebpageI{
     }
 
     private void scraping() {
-        for (Document doc: this.documents) {
+
+        ArrayList<String> reviews = null;
+        ArrayList<HashMap<String, Integer>> ratings = null;
+
+        for (Document doc : this.documents) {
             Elements reviewArea = doc.select("textarea[id*=save]");
             Elements tabContents = doc.select("div.tab1_content");
-
             Elements stars = tabContents.select("div.star_icon_div > span");
 
-            setReviewsFromDoc(reviewArea);
-            setStarsFromDoc(stars);
+            reviews = setReviewsFromDoc(reviewArea);
+            ratings = setStarsFromDoc(stars);
+
+            if (reviews.size() != ratings.size()) continue;
+            for (int i = 0; i < reviews.size(); i++) {
+                this.reviews.add(new Review(reviews.get(i), ratings.get(i)));
+            }
+
+
         }
     }
 
-    private void setReviewsFromDoc(Elements reviews) {
-        for (Element r: reviews) {
-            this.reviews.add(r.text());
+    private ArrayList<String> setReviewsFromDoc(Elements reviews) {
+        ArrayList<String> reviewText = new ArrayList<>();
+
+        for (Element r : reviews) {
+            reviewText.add(r.text());
         }
+
+        return reviewText;
     }
 
-    private void setStarsFromDoc(Elements stars) {
+    private ArrayList<HashMap<String, Integer>> setStarsFromDoc(Elements stars) {
+        ArrayList<HashMap<String, Integer>> ratings = new ArrayList<>();
+
         String[] starKey = {"의사친절도", "상담전문성", "스탭친절도", "병원시설", "수술기대치"};
 
         HashMap<String, Integer> starMap = new HashMap<>();
 
-        for (int i = 0; i < stars.size(); i++) {
-            if (i != 0 && i % 5 == 0) {
-                this.stars.add(starMap);
-                starMap.clear();
+        for (int i = 0; i < stars.size(); i += 5) {
+            for (int j = i; j < i + 5 && j < stars.size(); j++) {
+                String[] a = stars.get(j).attr("style").split(":");
+                starMap.put(starKey[j % 5], percentToInteger(a[1]));
             }
 
-            String[] a = stars.get(i).attr("style").split(":");
-            starMap.put(starKey[i%5], percentToInteger(a[1]));
+            ratings.add(starMap);
+            starMap = new HashMap<>();
         }
+
+        return ratings;
     }
 
     private Integer percentToInteger(String percent) {
@@ -80,21 +97,8 @@ public class Sungyesa implements WebpageI{
     }
 
     @Override
-    public ArrayList<String> getReviews() {
+    public ArrayList<Review> getReviewsAndStars() {
 
-        for (String s: this.reviews) {
-            System.out.println(s);
-        }
-        return null;
-    }
-
-    @Override
-    public Double avgStars() {
-        for (HashMap<String,Integer> s: this.stars) {
-            for (String key: s.keySet()) {
-                System.out.println("Key: " + key + ", Value: " +s.get(key));
-            }
-        }
-        return null;
+        return this.reviews;
     }
 }
