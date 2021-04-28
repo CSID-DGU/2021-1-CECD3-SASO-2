@@ -8,17 +8,29 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class Sungyesa implements WebpageI {
+
+// 해당 사이트에서 데이터를 가지고 올 책임이 있다.
+public class Sungyesa implements Crawler {
     private String baseUrl = "https://sungyesa.com";
     private ArrayList<Document> documents = new ArrayList<>();
     private ArrayList<String> urls = new ArrayList<>();
     private ArrayList<Review> reviews = new ArrayList<>();
+    private static final int MAX_PAGE_INDEX = 10000;
 
-    public Sungyesa() {
-        setConnectUrl(1, 100);
+    public Sungyesa(int crawlingSize) {
+        // 멀티 Thread 병렬 처리
+        for (int i = 1; i + crawlingSize < MAX_PAGE_INDEX; i += crawlingSize) {
+            this.reviews.addAll(crawlingPage(i, i + crawlingSize));
+        }
+    }
+
+    public ArrayList<Review> crawlingPage(int startPageIndex, int endPageIndex) {
+        ArrayList<Review> result = null;
+        setConnectUrl(startPageIndex, endPageIndex);
         connect();
-        scraping();
+        result = scraping();
 
+        return result;
     }
 
     // 연결할 Url을 설정하는 함수, [1, idRange] 범위까지 페이지 url을 설정한다.
@@ -39,10 +51,10 @@ public class Sungyesa implements WebpageI {
         }
     }
 
-    private void scraping() {
-
+    private ArrayList<Review> scraping() {
         ArrayList<String> reviews = null;
         ArrayList<HashMap<String, Integer>> ratings = null;
+        ArrayList<Review> result = new ArrayList<>();
 
         for (Document doc : this.documents) {
             Elements reviewArea = doc.select("textarea[id*=save]");
@@ -54,11 +66,11 @@ public class Sungyesa implements WebpageI {
 
             if (reviews.size() != ratings.size()) continue;
             for (int i = 0; i < reviews.size(); i++) {
-                this.reviews.add(new Review(reviews.get(i), ratings.get(i)));
+                result.add(new Review(reviews.get(i), ratings.get(i)));
             }
-
-
         }
+
+        return result;
     }
 
     private ArrayList<String> setReviewsFromDoc(Elements reviews) {
@@ -73,9 +85,7 @@ public class Sungyesa implements WebpageI {
 
     private ArrayList<HashMap<String, Integer>> setStarsFromDoc(Elements stars) {
         ArrayList<HashMap<String, Integer>> ratings = new ArrayList<>();
-
         String[] starKey = {"의사친절도", "상담전문성", "스탭친절도", "병원시설", "수술기대치"};
-
         HashMap<String, Integer> starMap = new HashMap<>();
 
         for (int i = 0; i < stars.size(); i += 5) {
@@ -97,8 +107,7 @@ public class Sungyesa implements WebpageI {
     }
 
     @Override
-    public ArrayList<Review> getReviewsAndStars() {
-
+    public ArrayList<Review> getReviews() {
         return this.reviews;
     }
 }
