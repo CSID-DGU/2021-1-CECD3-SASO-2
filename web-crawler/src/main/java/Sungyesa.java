@@ -18,7 +18,7 @@ import java.util.HashMap;
 public class Sungyesa implements Crawler {
     private String baseUrl = "https://sungyesa.com";
     private ArrayList<Document> documents = new ArrayList<>();
-    private static final int MAX_PAGE_INDEX = 10000;
+    private static final int MAX_PAGE_INDEX = 80000;
 
     public Sungyesa(int crawlingSize) {
         System.out.println("sugn");

@@ -1,5 +1,3 @@
-import org.json.JSONArray;
-
 import java.util.ArrayList;
 
 // 크롤링할 객체들을 관리하는  컨테이너 객체
