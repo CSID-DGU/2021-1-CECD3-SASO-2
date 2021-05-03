@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'org.json', name: 'json', version: '20210307'
+        classpath(group: 'org.json', name: 'json', version: '20210307')
     }
 }
 
@@ -11,7 +11,8 @@ plugins {
     id 'java'
     id 'application'
 }
-
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 group 'org.example'
 version '1.0-SNAPSHOT'
 
@@ -29,7 +30,9 @@ jar {
     manifest {
         attributes 'Main-Class': 'Runner'
     }
-    from configurations.runtime.collect { zipTree(it) }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
 
 mainClassName="Runner"
