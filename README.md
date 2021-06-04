@@ -4,6 +4,7 @@
 * 댓글 리뷰를 크롤링 
 <br/>
 
+ ![image](https://user-images.githubusercontent.com/22928068/120779216-d3274d80-c561-11eb-94cd-d76b2644653e.png)
 > ## Developer
 <pre>
 팀장 : 2016112146 장준표
