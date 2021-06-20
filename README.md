@@ -42,8 +42,7 @@ Java를 이용하여 웹 크롤러를 구현했으며 이를 AWS EC2 서버에 �
 
 **[크롤링 된 리뷰]**
 
- 
-![image](https://user-images.githubusercontent.com/22928068/122672810-6de18680-d208-11eb-94c6-2fb08cf11c30.png)
+ ![image](https://user-images.githubusercontent.com/22928068/122673172-3ecc1480-d20a-11eb-8d2a-c6668187e1bf.png)
 
 
 **[EC2에 저장되는 크롤링 파일]**
