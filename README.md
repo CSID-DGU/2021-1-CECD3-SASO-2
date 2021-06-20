@@ -19,13 +19,14 @@
 * Python TensorFlow (NLP analysis)
 <br/>
 
-> ## 실행 순서   
+> ## Installation
  - NLP   
  NLP/jsonEdit.ipynp 파일로 크롤링한 데이터 json 형식으로 전환   
  NLP/NLP.ipynb 파일을 순차적으로 실행   
- - 웹(Front-End)
+
  
- ## Installation
+ ## 웹(Front-End)
+ ### Installation
  ```
  git clone https://github.com/CSID-DGU/2021-1-CECD3-SASO-2.git
  
