@@ -56,11 +56,29 @@ File로 저장됨과 동시에 DB에 Insert하여 웹 크롤러가 한번 크롤
 
 ![image](https://user-images.githubusercontent.com/22928068/122672823-7934b200-d208-11eb-994e-7bab60a94b33.png)
 
-**[JSON 파일 형식]**
+**[JSON 파일 형식]**   
+
+
+## NLP 
+### 긍부정 학습 모델 제작
+![image](https://user-images.githubusercontent.com/66078685/122672904-df213980-d208-11eb-810f-7d9ba9145eb4.png)
+
+
+다음과 같이 리뷰 데이터를 JSON 형식으로 받으면 각 리뷰를 Tokenized 작업을 수행한다. 이 작업을 수행한다면 단어의 품사별로 나눠지며 각 단어의 상위 빈도수에 따른 리스트를 생성할 수 있다. 후에 각 리뷰 마다 상위 빈도수의 단어의 개수를 x Label, 별점을 y Label을 설정하여 생성한 모델에 삽입하고 학습된 모델을 만든다.   
+
+![image](https://user-images.githubusercontent.com/66078685/122673063-b3528380-d209-11eb-9d9b-d15a0eea1074.png)
+
+
+만든 모델을 불러와 긍.부정 메서드를 구현하고 크롤링한 데이터를 저장하는 DB 에서 추가적인 리뷰를 가져와 긍부정 판단을 수행한다.
+후에 이 결과는 API를 통해 프론트 쪽으로 시각화 작업이 이루어진다. 
+
+
+
+### 감상 사전 제작
+![image](https://user-images.githubusercontent.com/66078685/122672987-62db2600-d209-11eb-8eaa-84172ff59aa0.png)
 
 
 > ## Installation
- - NLP   
  NLP/jsonEdit.ipynp 파일로 크롤링한 데이터 json 형식으로 전환   
  NLP/NLP.ipynb 파일을 순차적으로 실행   
 
