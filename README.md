@@ -30,7 +30,7 @@
  ```
  git clone https://github.com/CSID-DGU/2021-1-CECD3-SASO-2.git
  
- cd front/web_front
+ cd 2021-1-CECD3-SASO-2/front/web_front
  
  npm install
  
