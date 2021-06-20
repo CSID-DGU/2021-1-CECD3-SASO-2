@@ -20,7 +20,9 @@
 <br/>
 
 > ##실행 순서
+> -NLP
 > * NLP/jsonEdit.ipynp 파일로 크롤링한 데이터 json 형식으로 전환
 > * NLP/NLP.ipynb 파일을 순차적으로 실행
-
+> -웹
+> *npm start
  
