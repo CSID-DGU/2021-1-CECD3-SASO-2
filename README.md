@@ -73,7 +73,7 @@ File로 저장됨과 동시에 DB에 Insert하여 웹 크롤러가 한번 크롤
 
 
 
-### 감상 사전 제작
+### 감성 사전 제작
 ![image](https://user-images.githubusercontent.com/66078685/122672987-62db2600-d209-11eb-8eaa-84172ff59aa0.png)
 
 
@@ -84,7 +84,10 @@ File로 저장됨과 동시에 DB에 Insert하여 웹 크롤러가 한번 크롤
 
  
  ## 웹(Front-End)
- ### Installation
+ ### 웹 어플리케이션 프로토타입 구현
+ ![image](https://user-images.githubusercontent.com/48276595/122754287-6d132800-d2ce-11eb-94d8-e9a789532962.png)
+ 웹 어플리케이션의 내용 구성 및 배치를 수행하였다. 그래프의 data source는 기존에 제공되어 있는나 [날짜:data] 형식을 가진 open 데이터 API를 이용하였다. 밑 부분의 게시판은 추후 리뷰 분석 결과 중 부정 지표가 80%이상을 나타내는 리뷰들을 내용과 등록일, 그리고 부정지표를 표시할 예정이다.
+ > ## Installation
  ```
  git clone https://github.com/CSID-DGU/2021-1-CECD3-SASO-2.git
  
