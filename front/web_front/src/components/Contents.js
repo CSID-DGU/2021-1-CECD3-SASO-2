@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react'
 import {Bar, Doughnut, Line } from 'react-chartjs-2';
 import axios from 'axios'
+import { findAllByLabelText } from '@testing-library/dom';
 
 const Contents = () => {
 
@@ -52,7 +53,7 @@ const Contents = () => {
             //console.log(arr);
 
             //map : 배열 재정의
-            const labels = arr.map(a=> '${a.month+1} 월' );
+            const labels = arr.map(a=> `${a.month+1} 월` );
             setConfirmedData({
                 labels,  //labels = labels, 이렇게 같은 땐 축약 가능
                 datasets:[
@@ -113,12 +114,13 @@ const Contents = () => {
                      legend: { display:true, position:"bottom"}}
                 } />
             </div>
-            <div> 
+            {/* <div> 
                 <Doughnut data={comparedData} options={
-                    { title: { display:true, text:"마케팅 분석 결과(${new Date().getMonth()+1}월)", fontSize:16 },
+                    {responsive:false,
+                        title: { display:true, text:"마케팅 분석 결과(${new Date().getMonth()+1}월)", fontSize:16 },
                      legend: { display:true, position:"bottom"}}
                 } />
-            </div>
+            </div> */}
         </div>
       </section>
     )
