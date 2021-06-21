@@ -32,3 +32,10 @@ section{
   grid-template-columns: 1fr 1fr;  /*나란히 2개만*/
   grid-gap:2rem;  /*간격*/
 }
+
+
+
+table, th, td {
+  text-align: center;
+}
+
