@@ -29,10 +29,8 @@ class Editor_keyword extends React.Component{
     const defaultList = this.props.defalutList
     const changeDicValue = this.props.changeDicValue 
     const onClick = () => {
-      // requestAPIServer(this.state.keyword, this.state.type)
-      //Click Event 발생시 value change
-      console.log(this.state.key)
       changeDicValue(this.state.keyword, this.state.key)
+      alert("키워드가 추가되었습니다.!!!")
     }
 
   

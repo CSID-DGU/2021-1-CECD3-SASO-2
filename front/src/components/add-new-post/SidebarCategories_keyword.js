@@ -66,6 +66,7 @@ class SidebarCategories extends React.Component{
 
     const onClick = () => {
       addKeywordList({title : this.state.keyword, value : ""})
+      alert("등록되었습니다.!!!")
     }
 
 
