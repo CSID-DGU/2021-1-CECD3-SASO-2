@@ -12,13 +12,30 @@ class Errors extends React.Component{
     super(props);
 
     this.state = {
-      generated_text : "추가할 키워드를 입력해주세요"
+      generated_text : "생기한의원",
+      defalutList : [{ title : "생기한의원", value : ["ㅅㄱㅎㅇㅇ"]}]
     }
   }
 
   render() {
-    const getGeneratedText = (text) => {
-      this.setState({generated_text : text})
+
+    const addKeywordList = (dic) => {
+      this.setState({defalutList : [
+        ...this.state.defalutList,
+        dic]
+      })
+    }
+
+    const changeDicValue = (value, key) => {
+      const index = this.state.defalutList.findIndex(p => p.title == key);
+      console.log(value, key, index)
+
+      this.setState({defalutList : [
+        ...this.state.defalutList.slice(0, index),
+        {title:key, value:value},
+        ...this.state.defalutList.slice(index+1)
+      ]
+      })
     }
 
     return (
@@ -33,13 +50,13 @@ class Errors extends React.Component{
         {/* Sidebar Widgets */}
         <Col lg="12" md="12">
           {/* <SidebarActions /> */}
-          <SidebarCategories_keyword generatedText={this.state.generated_text}/>
+          <SidebarCategories_keyword addKeywordList={addKeywordList} defalutList={this.state.defalutList}/>
         </Col>
       </Row>
       <Row>
         {/* Editor */}
         <Col lg="12" md="12">
-          <Editor_keyword getGeneratedText={getGeneratedText}/>
+          <Editor_keyword defalutList={this.state.defalutList} changeDicValue={changeDicValue}/>
         </Col>
       </Row>
     </Container>
