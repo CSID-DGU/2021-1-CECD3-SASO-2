@@ -51,7 +51,7 @@ SidebarCategories.propTypes = {
 
 SidebarCategories.defaultProps = {
   // title: "Categories"
-  title: "문장 생성"
+  title: "키워드 등록"
 };
 
 export default SidebarCategories;

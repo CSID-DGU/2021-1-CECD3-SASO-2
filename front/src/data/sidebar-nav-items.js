@@ -1,6 +1,11 @@
 export default function() {
   return [
     {
+      title: "키워드 입력",
+      htmlBefore: '<i class="material-icons">error</i>',
+      to: "/errors",
+    }, 
+    {
       title: "평판 관리",
       to: "/blog-overview",
       htmlBefore: '<i class="material-icons">edit</i>',
@@ -31,10 +36,6 @@ export default function() {
     //   htmlBefore: '<i class="material-icons">person</i>',
     //   to: "/user-profile-lite",
     // },
-    {
-      title: "키워드 분석",
-      htmlBefore: '<i class="material-icons">error</i>',
-      to: "/errors",
-    }
+    
   ];
 }

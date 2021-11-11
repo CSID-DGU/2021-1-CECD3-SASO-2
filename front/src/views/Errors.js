@@ -12,7 +12,7 @@ class Errors extends React.Component{
     super(props);
 
     this.state = {
-      generated_text : "문장을 생성해주세요.."
+      generated_text : "추가할 키워드를 입력해주세요"
     }
   }
 
@@ -25,20 +25,21 @@ class Errors extends React.Component{
       <Container fluid className="main-content-container px-4 pb-4">
       {/* Page Header */}
       <Row noGutters className="page-header py-4">
-        <PageTitle sm="4" title="문장 생성" subtitle="SASO" className="text-sm-left" />
+        <PageTitle sm="4" title="키워드 입력" subtitle="SASO" className="text-sm-left" />
       </Row>
   
-      <Row>
-        {/* Editor */}
-        <Col lg="12" md="12">
-          <Editor_keyword getGeneratedText={getGeneratedText}/>
-        </Col>
-      </Row>
+      
       <Row>
         {/* Sidebar Widgets */}
         <Col lg="12" md="12">
           {/* <SidebarActions /> */}
           <SidebarCategories_keyword generatedText={this.state.generated_text}/>
+        </Col>
+      </Row>
+      <Row>
+        {/* Editor */}
+        <Col lg="12" md="12">
+          <Editor_keyword getGeneratedText={getGeneratedText}/>
         </Col>
       </Row>
     </Container>

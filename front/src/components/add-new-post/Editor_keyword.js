@@ -58,16 +58,16 @@ class Editor_keyword extends React.Component{
           <FormInput size="lg" className="mb-3" placeholder="키워드 입력" onChange={e => this.onChange(e.target.value)}/>
           {/* <ReactQuill className="add-new-post__editor mb-1" /> */}
           <Button theme="accent" size="sm" className="ml-auto" onClick={onClick}>
-              <i className="material-icons">file_copy</i> 생성
+              <i className="material-icons">file_copy</i> 추가
             </Button>
-            <FormSelect
+            {/* <FormSelect
                   size="sm"        
                   style={{ maxWidth: "130px" , marginLeft: '10px'}}
                   onChange={e => this.onChange(e.target.value)}
                 >
                   <option value="viral">바이럴</option>
                   <option value="press">언론보도</option>
-                </FormSelect>  
+                </FormSelect>   */}
         </Form>
       </CardBody>
     </Card>
