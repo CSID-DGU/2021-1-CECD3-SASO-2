@@ -1,4 +1,5 @@
 import pymysql
+from datetime import datetime, timedelta
 
 def get_blog_url(query):
     conn = pymysql.connect(
@@ -63,4 +64,77 @@ def get_youtube(query):
 
     return content, postdate, url, source
 
+def get_today_blog(query):
+    conn = pymysql.connect(
+        host='localhost',
+        user='saso',
+        password='saso',
+        db='CRAWLING',
+        charset='utf8'
+    )
+    result = []
+    mon_len = 0
+    curs = conn.cursor()
 
+    for i in range (0,30):
+        today = datetime.today() - timedelta(i)
+        today = today.strftime("%Y-%m-%d")
+
+        sql = "select * from naver_openApi where query = %s AND postdate = %s"
+        curs.execute(sql, (query, today))
+        rows = (curs.fetchall())
+        mon_len += len(rows)
+        result.append(rows)
+
+    conn.close()
+    return mon_len, result
+
+def get_today_blog(query):
+    conn = pymysql.connect(
+        host='localhost',
+        user='saso',
+        password='saso',
+        db='CRAWLING',
+        charset='utf8'
+    )
+    result = []
+    mon_len = 0
+    curs = conn.cursor()
+
+    for i in range (0,30):
+        today = datetime.today() - timedelta(i)
+        today = today.strftime("%Y-%m-%d")
+
+        sql = "select * from naver_openApi where query = %s AND postdate = %s"
+        curs.execute(sql, (query, today))
+        rows = (curs.fetchall())
+        mon_len += len(rows)
+        result.append(rows)
+
+    conn.close()
+    return mon_len, result
+
+def get_today_youtube(query):
+    conn = pymysql.connect(
+        host='localhost',
+        user='saso',
+        password='saso',
+        db='CRAWLING',
+        charset='utf8'
+    )
+    result = []
+    mon_len = 0
+    curs = conn.cursor()
+
+    for i in range (0,30):
+        today = datetime.today() - timedelta(i)
+        today = today.strftime("%Y-%m-%d")
+
+        sql = "select * from Crawl_youtube where query = %s AND postdate = %s"
+        curs.execute(sql, (query, today))
+        rows = (curs.fetchall())
+        mon_len += len(rows)
+        result.append(rows)
+
+    conn.close()
+    return mon_len, result
