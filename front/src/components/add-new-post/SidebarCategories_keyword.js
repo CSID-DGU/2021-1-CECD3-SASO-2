@@ -77,7 +77,7 @@ class SidebarCategories extends React.Component{
         </CardHeader>
         <CardBody className="p-0">
           <ListGroup flush>
-            <ListGroupItem className="px-3 pb-2">
+            
               {defalutList.map((item, idx) => (
                 <ListGroupItem key={idx} className="d-flex px-3">
                   <span className="text-semibold text-fiord-blue">{item.title}</span>
@@ -86,7 +86,7 @@ class SidebarCategories extends React.Component{
                   </span>
                 </ListGroupItem>
               ))}
-            </ListGroupItem>
+            
     
             <ListGroupItem className="d-flex px-3">
               <InputGroup className="ml-auto">

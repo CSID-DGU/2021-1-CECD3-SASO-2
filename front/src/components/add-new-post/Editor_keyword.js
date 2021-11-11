@@ -48,12 +48,10 @@ class Editor_keyword extends React.Component{
                   style={{ maxWidth: "130px" , marginLeft: '10px'}}
                   onChange={e => this.onChangeKey(e.target.value)}>
 
-                  {defaultList && defaultList.map((item)=>(
-                    <option value={item.title}>{item.title}</option>
+                  {defaultList && defaultList.map((item, idx)=>(
+                    <option value={item.title} key={idx}>{item.title}</option>
                   ))}
 
-              {/* <option value="viral">바이럴</option>
-              <option value="press">언론보도</option> */}
             </FormSelect>  
                   
 
