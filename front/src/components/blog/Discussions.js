@@ -10,75 +10,101 @@ import {
   Row,
   Col
 } from "shards-react";
+import Context from "../../context/index"
 
-const Discussions = ({ title, discussions }) => (
-  <Card small className="blog-comments">
-    <CardHeader className="border-bottom">
-      <h6 className="m-0">{title}</h6>
-    </CardHeader>
-    <CardBody className="p-0">
-      {discussions.map((discussion, idx) => (
-        <div key={idx} className="blog-comments__item d-flex p-3">
-          {/* Avatar */}
-          {/* <div className="blog-comments__avatar mr-3">
-            <img src={discussion.author.image} alt={discussion.author.name} />
-          </div> */}
+class Discussions extends React.Component{
+  static contextType = Context
+  constructor(props) {
+    super(props);
 
-          {/* Content */}
-          <div className="blog-comments__content">
-            {/* Content :: Title */}
-            <div className="blog-comments__meta text-mutes">
-              <a className="text-secondary" href={discussion.author.url}>
-                {discussion.author.name}
-              </a>{" "}
-              on{" "}
-              <a className="text-secondary" href={discussion.post.url}>
-                {discussion.post.title}
-              </a>
-              <span className="text-mutes">- {discussion.date}</span>
-            </div>
+    this.state = {
+      discussion : this.props.discussions,
+      pastContext : {}
+    }
+  }
 
-            {/* Content :: Body */}
-            <p className="m-0 my-1 mb-2 text-muted">{discussion.body}</p>
+  onClick = () => {
+    alert("관심 리뷰로 추가하였습니다.")
+  }
 
-            {/* Content :: Actions */}
-            <div className="blog-comments__actions">
-              <ButtonGroup size="sm">
-                <Button theme="white">
+  componentDidMount() {
+    this.setState({pastContext : this.context.totalData.reviewList})
+  }
+
+  componentDidUpdate(){
+    // const { totalData, setData } = this.context
+    if(this.state.pastContext !== this.context.totalData.reviewList){
+        console.log(this.context.totalData.reviewList)
+      this.setState({
+        discussion : this.context.totalData.reviewList,
+        pastContext : this.context.totalData.reviewList})
+    }
+  }
+
+  render(){
+    const {title} = this.props
+    const discussions = this.state.discussion
+    return(
+      <Card small className="blog-comments">
+        <CardHeader className="border-bottom">
+          <h6 className="m-0">{title}</h6>
+        </CardHeader>
+        <CardBody className="p-0">
+          {discussions.map((discussion, idx) => (
+            <div key={idx} className="blog-comments__item d-flex p-3">
+
+              {/* Content */}
+              <div className="blog-comments__content">
+                {/* Content :: Title */}
+                <div className="blog-comments__meta text-mutes">
+                  <a className="text-secondary" href={discussion.author.url}>
+                    {discussion.author.name}
+                  </a>{" "}
+                  {" "}
+                  <a className="text-secondary" href={discussion.post.url}>
+                    {discussion.post.title}
+                  </a>
+                  <span className="text-mutes">- {discussion.date}</span>
+                </div>
+
+                {/* Content :: Body */}
+                <p className="m-0 my-1 mb-2 text-muted">{discussion.body}</p>
+
+                {/* Content :: Actions */}
+                <div className="blog-comments__actions">
+                  <ButtonGroup size="sm">
+                    <Button theme="white" onClick={this.onClick}>
                   <span className="text-success">
                     <i className="material-icons">check</i>
                   </span>{" "}
-                  Approve
-                </Button>
-                <Button theme="white">
-                  <span className="text-danger">
-                    <i className="material-icons">clear</i>
-                  </span>{" "}
-                  Reject
-                </Button>
-                <Button theme="white">
+                      관심대상추가
+                    </Button>
+                    <Button theme="white" href={discussion.author.url}>
                   <span className="text-light">
                     <i className="material-icons">more_vert</i>
                   </span>{" "}
-                  Edit
-                </Button>
-              </ButtonGroup>
+                      접속하기
+                    </Button>
+                  </ButtonGroup>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      ))}
-    </CardBody>
-    <CardFooter className="border-top">
-      <Row>
-        <Col className="text-center view-report">
-          <Button theme="white" type="submit">
-            View All Comments
-          </Button>
-        </Col>
-      </Row>
-    </CardFooter>
-  </Card>
-);
+          ))}
+        </CardBody>
+        <CardFooter className="border-top">
+          <Row>
+            <Col className="text-center view-report">
+              <Button theme="white" type="submit">
+                View All Comments
+              </Button>
+            </Col>
+          </Row>
+        </CardFooter>
+      </Card>
+    )
+  }
+}
+
 
 Discussions.propTypes = {
   /**
@@ -96,59 +122,17 @@ Discussions.defaultProps = {
   discussions: [
     {
       id: 1,
-      date: "3 days ago",
+      date: "",
       author: {
         image: require("../../images/avatars/1.jpg"),
-        name: "네이버 블로그 ...",
-        url: "https://github.com/sonamu4"
+        name: "",
+        url: "https://github.com/CSID-DGU/2021-1-CECD3-SASO-2"
       },
       post: {
-        title: "생기한의원 너무 구져요 ",
+        title: "",
         url: "#"
       },
-      body: "두번 다시 안갈것 같아요. 절대로 가지 마세요"
-    },
-    {
-      id: 2,
-      date: "4 days ago",
-      author: {
-        image: require("../../images/avatars/2.jpg"),
-        name: "John Doe",
-        url: "#"
-      },
-      post: {
-        title: "Hello World!",
-        url: "#"
-      },
-      body: "After the avalanche, it took us a week to climb out. Now..."
-    },
-    {
-      id: 3,
-      date: "5 days ago",
-      author: {
-        image: require("../../images/avatars/3.jpg"),
-        name: "John Doe",
-        url: "#"
-      },
-      post: {
-        title: "Hello World!",
-        url: "#"
-      },
-      body: "My money's in that office, right? If she start giving me..."
-    },
-    {
-      id: 4,
-      date: "5 days ago",
-      author: {
-        image: require("../../images/avatars/3.jpg"),
-        name: "John Doe",
-        url: "#"
-      },
-      post: {
-        title: "Hello World!",
-        url: "#"
-      },
-      body: "My money's in that office, right? If she start giving me..."
+      body: ""
     }
   ]
 };

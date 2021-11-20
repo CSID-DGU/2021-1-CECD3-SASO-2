@@ -4,6 +4,7 @@ import { Container, Row, Col } from "shards-react";
 import PageTitle from "../components/common/PageTitle";
 import Editor_keyword from "../components/add-new-post/Editor_keyword";
 import SidebarActions from "../components/add-new-post/SidebarActions";
+import SimilarSentense from "../components/add-new-post/SimilarSentense"
 import SidebarCategories_keyword from "../components/add-new-post/SidebarCategories_keyword";
 
 
@@ -12,52 +13,45 @@ class Errors extends React.Component{
     super(props);
 
     this.state = {
-      generated_text : "생기한의원",
-      defalutList : [{ title : "생기한의원", value : ["ㅅㄱㅎㅇㅇ"]}]
+      generated_text : "문장을 생성해주세요..",
+      cosin_List : []
     }
   }
 
   render() {
-
-    const addKeywordList = (dic) => {
-      this.setState({defalutList : [
-        ...this.state.defalutList,
-        dic]
-      })
+    const getGeneratedText = (text) => {
+      this.setState({generated_text : text})
     }
 
-    const changeDicValue = (value, key) => {
-      const index = this.state.defalutList.findIndex(p => p.title == key);
-      console.log(value, key, index)
-
-      this.setState({defalutList : [
-        ...this.state.defalutList.slice(0, index),
-        {title:key, value:value},
-        ...this.state.defalutList.slice(index+1)
-      ]
-      })
+    const getCosineSimilarity = (list)=>{
+      this.setState({cosin_List : list})
     }
 
     return (
       <Container fluid className="main-content-container px-4 pb-4">
       {/* Page Header */}
       <Row noGutters className="page-header py-4">
-        <PageTitle sm="4" title="키워드 입력" subtitle="SASO" className="text-sm-left" />
+        <PageTitle sm="4" title="문장 생성" subtitle="SASO" className="text-sm-left" />
       </Row>
   
-      
+      <Row>
+        {/* Editor */}
+        <Col lg="12" md="12">
+          <Editor_keyword getGeneratedText={getGeneratedText} getCosineSimilarity={getCosineSimilarity}/>
+        </Col>
+      </Row>
       <Row>
         {/* Sidebar Widgets */}
         <Col lg="12" md="12">
           {/* <SidebarActions /> */}
-          <SidebarCategories_keyword addKeywordList={addKeywordList} defalutList={this.state.defalutList}/>
+          <SidebarCategories_keyword generatedText={this.state.generated_text}/>
         </Col>
       </Row>
       <Row>
-        {/* Editor */}
         <Col lg="12" md="12">
-          <Editor_keyword defalutList={this.state.defalutList} changeDicValue={changeDicValue}/>
+          <SimilarSentense cosinList={this.state.cosin_List}/>
         </Col>
+          {/* <SidebarActions /> */}
       </Row>
     </Container>
     )

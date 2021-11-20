@@ -99,7 +99,7 @@ class UsersOverview extends React.Component {
       this.state.chart.data.datasets[0].data = this.context.totalData.eachMonthPosNeg[0].pos_data
       this.state.chart.data.datasets[1].data = this.context.totalData.eachMonthPosNeg[0].neg_data
       this.state.chart.update()
-      this.setState({ topReferrals :this.context.totalData.eachMonthPosNeg })      
+      this.setState({ topReferrals :this.context.totalData.eachMonthPosNeg })
       this.setState({pastContext: this.context.totalData.eachMonthPosNeg})
     }
   }
@@ -112,7 +112,7 @@ class UsersOverview extends React.Component {
           <h6 className="m-0">{title}</h6>
         </CardHeader>
         <CardBody className="pt-0">
-          <Row className="border-bottom py-2 bg-light">
+          {/* <Row className="border-bottom py-2 bg-light">
             <Col sm="6" className="d-flex mb-2 mb-sm-0">
               <RangeDatePicker />
             </Col>
@@ -124,7 +124,7 @@ class UsersOverview extends React.Component {
                 View Full Report &rarr;
               </Button>
             </Col>
-          </Row>
+          </Row> */}
           <canvas
             height="120"
             ref={this.canvasRef}
@@ -160,18 +160,18 @@ UsersOverview.defaultProps = {
         label: "긍정 단어 등장",
         fill: "start",
         data: [
-          500,
-          800,
-          320,
-          180,
-          240,
-          320,
-          230,
-          650,
-          590,
-          1200,
-          750,
-          940,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
         ],
         backgroundColor: "rgba(0,123,255,0.1)",
         borderColor: "rgba(0,123,255,1)",
@@ -185,18 +185,18 @@ UsersOverview.defaultProps = {
         label: "부정 단어 등장",
         fill: "start",
         data: [
-          380,
-          430,
-          120,
-          230,
-          410,
-          740,
-          472,
-          219,
-          391,
-          229,
-          400,
-          203,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
         ],
         backgroundColor: "rgba(255,65,105,0.1)",
         borderColor: "rgba(255,65,105,1)",

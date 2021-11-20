@@ -2,7 +2,7 @@ from urllib.parse import urlparse
 
 import pandas as pd
 import urllib.request
-import config
+from crawling import config
 import requests
 import sqlalchemy
 from sqlalchemy import create_engine
@@ -51,7 +51,7 @@ def get_naver(source, query):
     return list
 
 def url_naver(query):
-    db_connection_str = 'mysql+pymysql://saso:saso@localhost/crawling'
+    db_connection_str = 'mysql+pymysql://saso:saso@localhost/DAMDA'
     db_connection = create_engine(db_connection_str)
 
     json_list_blog = get_naver('blog', query)
@@ -62,11 +62,11 @@ def url_naver(query):
 
     for i, list in enumerate(json_list_blog):
         try:
-            sql = "CREATE TABLE `crawling`.`naver_openApi` (  `id` INT NOT NULL AUTO_INCREMENT,  `title` VARCHAR(100) NULL, `content` TEXT NULL,  `name` VARCHAR(100) NULL, `postdate` DATETIME NULL, `url` VARCHAR(100) NULL, `query` VARCHAR(45) NULL,  `source` VARCHAR(45) NULL, PRIMARY KEY (`id`), UNIQUE INDEX `url_UNIQUE` (`url` ASC) VISIBLE);"
+            sql = "CREATE TABLE naver_openApi (  id INT NOT NULL AUTO_INCREMENT,  title VARCHAR(100) NULL, content TEXT NULL,  name VARCHAR(100) NULL, postdate DATETIME NULL, url VARCHAR(500) NULL, query VARCHAR(45) NULL,  source VARCHAR(45) NULL, PRIMARY KEY (id), UNIQUE INDEX  url_UNIQUE (url ASC)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;"
             db_connection.execute(sql)
             print('create table')
         except:
-            print(end='')
+            print('dont', end='')
 
         sql = "SELECT count(*) FROM naver_openApi WHERE url = %s"
         result = db_connection.execute(sql, (list[4]))
@@ -80,6 +80,27 @@ def url_naver(query):
 
 
     # json_list_cafe = get_naver('cafe', query)
+    #
+    # source = 'naver_cafe'
+    #
+    # for i, list in enumerate(json_list_cafe):
+    #     try:
+    #         sql = "CREATE TABLE `crawling`.`naver_openApi` (  `id` INT NOT NULL AUTO_INCREMENT,  `title` VARCHAR(100) NULL, `content` TEXT NULL,  `name` VARCHAR(100) NULL, `postdate` DATETIME NULL, `url` VARCHAR(100) NULL, `query` VARCHAR(45) NULL,  `source` VARCHAR(45) NULL, PRIMARY KEY (`id`), UNIQUE INDEX `url_UNIQUE` (`url` ASC) VISIBLE);"
+    #         db_connection.execute(sql)
+    #         print('create table')
+    #     except:
+    #         print(end='')
+    #
+    #     sql = "SELECT count(*) FROM naver_openApi WHERE url = %s"
+    #     result = db_connection.execute(sql, (list[4]))
+    #     result = (result.first()[0])
+    #     if result > 0:
+    #         print(i, ': ', list[4], ' skip')
+    #     else:
+    #         sql = "INSERT INTO naver_openApi (title, content, name, postdate, url, query, source) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+    #         db_connection.execute(sql, (list[0], list[1], list[2], list[3], list[4], query, source))
+    #         print(i, ': ', list[4], ' done')
+    #
     # df_c = pd.DataFrame(json_list_cafe, columns=['title', 'contents', 'name', 'url'])
     # df_c['query'] = query
     # df_c['source'] = '네이버카페'

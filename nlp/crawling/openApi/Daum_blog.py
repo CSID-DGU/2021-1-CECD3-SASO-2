@@ -2,7 +2,12 @@ import requests
 import json
 import pandas as pd
 from urllib.parse import urlparse
-import config
+# import config
+from crawling import config
+from sqlalchemy import create_engine
+import re
+
+
 
 ############ 카카오 검색 API를 이용한 '깃대종' 블로그/카페 검색 가시화  https://blog.daum.net/geoscience/1412
 
@@ -30,8 +35,8 @@ def get_daum(source, query):
             json_obj = request_daum(source, query, page)
             for document in json_obj['documents']:
                 val = [document['title'].replace("<b>", "").replace("</b>", ""),
-                       document['contents'].replace("<b>", "").replace("</b>", "").replace("&lt;", "").replace("&gt;", ""),
-                       document['blogname'], document['datetime'].replace("-", ""), document['url']]
+                       document['contents'],
+                       document['blogname'], document['datetime'][:10], document['url']]
                 list.append(val)
             if json_obj['meta']['is_end'] is True: break
             page += 1
@@ -40,8 +45,8 @@ def get_daum(source, query):
             json_obj = request_daum(source, query, page)
             for document in json_obj['documents']:
                 val = [document['title'].replace("<b>", "").replace("</b>", ""),
-                       document['contents'].replace("<b>", "").replace("</b>", ""),
-                       document['cafename'].replace("&lt;","").replace("&gt;",""), document['datetime'].replace("-", ""), document['url']]
+                       document['contents'],
+                       document['cafename'].replace("&lt;","").replace("&gt;",""), document['datetime'][:10], document['url']]
                 list.append(val)
             if json_obj['meta']['is_end'] is True: break
             page += 1
@@ -49,15 +54,67 @@ def get_daum(source, query):
 
 
 def url_daum(query):
-    json_list_blog = get_daum('blog', query)
-    df_b = pd.DataFrame(json_list_blog, columns=['title', 'contents', 'name', 'postdate', 'url'])
-    df_b['query'] = query
-    df_b['source'] = '다음블로그'
-    df_b.to_excel('Crawler/Crawling_Result/URL_DATA/'+query+'_Daum_blog'+'.xlsx', index=True, index_label = "id")
+    db_connection_str = 'mysql+pymysql://saso:saso@localhost/DAMDA'
+    db_connection = create_engine(db_connection_str)
 
+    json_list_blog = get_daum('blog', query)
+
+    for i, list in enumerate(json_list_blog):
+        try:
+            sql = "CREATE TABLE daum_openApi (  id INT NOT NULL AUTO_INCREMENT,  title VARCHAR(100) NULL, content TEXT NULL,  name TEXT NULL, postdate DATETIME NULL, url VARCHAR(100) NULL, query VARCHAR(45) NULL,  source VARCHAR(45) NULL, PRIMARY KEY (id), UNIQUE INDEX url_UNIQUE (url ASC)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;"
+            db_connection.execute(sql)
+            print('create table')
+        except:
+            print(end='')
+
+        sql = "SELECT count(*) FROM naver_openApi WHERE url = %s"
+        naver_ = db_connection.execute(sql, (list[4]))
+        result = (naver_.first()[0])
+
+        sql = "SELECT count(*) FROM daum_openApi WHERE url = %s"
+        daum_ = db_connection.execute(sql, (list[4]))
+        result += (daum_.first()[0])
+
+        if result > 0:
+            print(i, ': ', list[4], ' skip')
+        else:
+            if 'naver' in list[4]:
+                source = 'naver_blog'
+                sql = "INSERT INTO naver_openApi (title, content, name, postdate, url, query, source) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+                db_connection.execute(sql, (list[0]), (list[1]), list[2], list[3], list[4], query, source)
+            else :
+                source = 'daum_blog'
+                sql = "INSERT INTO daum_openApi (title, content, name, postdate, url, query, source) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+                db_connection.execute(sql, (list[0]), (list[1]), list[2], list[3], list[4], query, source)
+            print(i, ': ', list[4], ' done')
 
     json_list_cafe = get_daum('cafe', query)
-    df_c = pd.DataFrame(json_list_cafe, columns=['title', 'contents', 'name', 'postdate', 'url'])
-    df_c['query'] = query
-    df_c['source'] = '다음카페'
-    df_c.to_excel('Crawler/Crawling_Result/URL_DATA/'+query+'_Daum_cafe'+'.xlsx', index=True, index_label = "id")
+
+    for i, list in enumerate(json_list_cafe):
+        try:
+            sql = "CREATE TABLE daum_openApi (  id INT NOT NULL AUTO_INCREMENT,  title VARCHAR(100) NULL, content TEXT NULL,  name TEXT NULL, postdate DATETIME NULL, url VARCHAR(100) NULL, query VARCHAR(45) NULL,  source VARCHAR(45) NULL, PRIMARY KEY (id), UNIQUE INDEX url_UNIQUE (url ASC)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;"
+            db_connection.execute(sql)
+            print('create table')
+        except:
+            print(end='')
+
+        sql = "SELECT count(*) FROM naver_openApi WHERE url = %s"
+        naver_ = db_connection.execute(sql, (list[4]))
+        result = (naver_.first()[0])
+
+        sql = "SELECT count(*) FROM daum_openApi WHERE url = %s"
+        daum_ = db_connection.execute(sql, (list[4]))
+        result += (daum_.first()[0])
+
+        if result > 0:
+            print(i, ': ', list[4], ' skip')
+        else:
+            if 'naver' in list[4]:
+                source = 'naver_cafe'
+                sql = "INSERT INTO naver_openApi (title, content, name, postdate, url, query, source) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+                db_connection.execute(sql, (list[0]), (list[1]), list[2], list[3], list[4], query, source)
+            else :
+                source = 'daum_cafe'
+                sql = "INSERT INTO daum_openApi (title, content, name, postdate, url, query, source) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+                db_connection.execute(sql, (list[0]), (list[1]), list[2], list[3], list[4], query, source)
+            print(i, ': ', list[4], ' done')

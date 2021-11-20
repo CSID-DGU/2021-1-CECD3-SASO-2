@@ -33,7 +33,7 @@ class TopReferrals extends React.Component {
 
   componentDidUpdate(){
     if(this.state.pastContext !== this.context.totalData.orderedWord){
-      this.setState({ topReferrals :this.context.totalData.orderedWord })      
+      this.setState({ topReferrals :this.context.totalData.orderedWord })
       this.setState({pastContext: this.context.totalData.orderedWord})
     }
   }
@@ -48,7 +48,7 @@ class TopReferrals extends React.Component {
         <h6 className="m-0">{title}</h6>
         <div className="block-handle" />
       </CardHeader>
-  
+
       <CardBody className="p-0">
         <ListGroup small flush className="list-group-small">
           {topReferrals.map((item, idx) => (
@@ -61,7 +61,7 @@ class TopReferrals extends React.Component {
           ))}
         </ListGroup>
       </CardBody>
-  
+
       <CardFooter className="border-top">
         <Row>
           {/* Time Span */}
@@ -72,18 +72,11 @@ class TopReferrals extends React.Component {
               style={{ maxWidth: "130px" }}
               onChange={() => {}}
             >
-              <option value="last-week">Last Week</option>
-              <option value="today">Today</option>
-              <option value="last-month">Last Month</option>
-              <option value="last-year">Last Year</option>
+              <option value="last-week">이번주</option>
+              <option value="today">저번주</option>
             </FormSelect>
           </Col>
-  
-          {/* View Full Report */}
-          <Col className="text-right view-report">
-            {/* eslint-disable-next-line */}
-            <a href="#">Full report &rarr;</a>
-          </Col>
+
         </Row>
       </CardFooter>
     </Card>
@@ -106,36 +99,8 @@ TopReferrals.defaultProps = {
   title: "긍 부정 단어 빈도수 정렬",
   referralData: [
     {
-      title: "GitHub",
-      value: "10,000"
-    },
-    {
-      title: "Stack Overflow",
-      value: "8,000"
-    },
-    {
-      title: "Hacker News",
-      value: "7,000"
-    },
-    {
-      title: "Reddit",
-      value: "3,000"
-    },
-    {
-      title: "The Next Web",
-      value: "2,000"
-    },
-    {
-      title: "Tech Crunch",
-      value: "100"
-    },
-    {
-      title: "YouTube",
-      value: "10"
-    },
-    {
-      title: "Adobe",
-      value: "1"
+      title: "단어",
+      value: "0"
     }
   ]
 };

@@ -13,49 +13,63 @@ class Editor_keyword extends React.Component{
 
     this.state ={      
       keyword : "",
-      key : "생기한의원"
+      type : "viral"
     }
   }
   onChange(e){
-    this.setState({keyword: e})
-  }
-
-  onChangeKey(e){
-    this.setState({key : e})
+    if (e === "press"){
+      this.setState({type:"press"})
+    }else if (e === "viral"){
+      this.setState({type:"viral"})
+    }else{
+      this.setState({keyword:e})
+    }
   }
   
   
   render(){
-    const defaultList = this.props.defalutList
-    const changeDicValue = this.props.changeDicValue 
+    const getGeneratedText = this.props.getGeneratedText
+    const getCosineSimilarity = this.props.getCosineSimilarity
     const onClick = () => {
-      changeDicValue(this.state.keyword, this.state.key)
-      alert("키워드가 추가되었습니다.!!!")
+      requestAPIServer(this.state.keyword, this.state.type)
     }
 
+    const requestAPIServer =(keyword, type) => {
+      axios
+      .get("/api/gen", {
+        params : {
+          keyword:keyword,
+          type: type
+        }
+      })
+      .then(function(response) {
+          getGeneratedText(response.data.generated_text)
+          getCosineSimilarity(response.data.cosin)
+
+      }.bind(this))  // <-- notice the .bind(this)
+      .catch(function(error) {
+          console.log(error);
+      });  
+    }
   
+
     return(
       <Card small className="mb-3">
       <CardBody>
         <Form className="add-new-post">
           <FormInput size="lg" className="mb-3" placeholder="키워드 입력" onChange={e => this.onChange(e.target.value)}/>
+          {/* <ReactQuill className="add-new-post__editor mb-1" /> */}
           <Button theme="accent" size="sm" className="ml-auto" onClick={onClick}>
-              <i className="material-icons">file_copy</i> 키워드 추가
+              <i className="material-icons">file_copy</i> 생성
             </Button>
-
             <FormSelect
                   size="sm"        
                   style={{ maxWidth: "130px" , marginLeft: '10px'}}
-                  onChange={e => this.onChangeKey(e.target.value)}>
-
-                  {defaultList && defaultList.map((item, idx)=>(
-                    <option value={item.title} key={idx}>{item.title}</option>
-                  ))}
-
-            </FormSelect>  
-                  
-
-
+                  onChange={e => this.onChange(e.target.value)}
+                >
+                  <option value="viral">바이럴</option>
+                  <option value="press">언론보도</option>
+                </FormSelect>  
         </Form>
       </CardBody>
     </Card>

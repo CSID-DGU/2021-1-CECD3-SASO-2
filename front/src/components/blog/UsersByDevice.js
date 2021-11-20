@@ -30,7 +30,7 @@ class UsersByDevice extends React.Component {
   }
 
 
-  componentDidMount() {    
+  componentDidMount() {
     this.setState({pastContext : this.context.totalData.totalPosNeg})
     const chartConfig = {
       type: "pie",
@@ -69,7 +69,7 @@ class UsersByDevice extends React.Component {
 
 
   render() {
-    const { title } = this.props;    
+    const { title } = this.props;
 
     return (
         <Card small className="h-100">
@@ -92,15 +92,9 @@ class UsersByDevice extends React.Component {
                   style={{ maxWidth: "130px" }}
                   onChange={() => {}}
                 >
-                  <option value="last-week">Last Week</option>
-                  <option value="today">Today</option>
-                  <option value="last-month">Last Month</option>
-                  <option value="last-year">Last Year</option>
+                  <option value="last-week">이번주</option>
+                  <option value="today">저번주</option>
                 </FormSelect>
-              </Col>
-              <Col className="text-right view-report">
-                {/* eslint-disable-next-line */}
-                <a href="#">View full report &rarr;</a>
               </Col>
             </Row>
           </CardFooter>
@@ -134,10 +128,10 @@ UsersByDevice.defaultProps = {
     datasets: [
       {
         hoverBorderColor: "#ffffff",
-        data: [89.3, 8.7, 2.1],
+        data: [1, 0, 0],
         backgroundColor: [
           "rgba(0,123,255,0.9)",
-          "rgba(0,123,255,0.5)",
+          "rgba(255,65,105,1)",
           "rgba(0,123,255,0.3)"
         ]
       }
