@@ -1,5 +1,5 @@
 # 2021-1-CECD3-SASO-2   
-NLP 감정 분석을 통한 마케팅 시장 분석
+🌲 NLP 감정 분석을 통한 마케팅 시장 분석
 
 ## Installation
  - react, flask 설치가 필요합니다. <br/>
@@ -10,6 +10,7 @@ NLP 감정 분석을 통한 마케팅 시장 분석
     - https://github.com/DesignRevision/shards-dashboard/tree/525efdca736a2203b8c3e5f8f64c766841e71c57 <br>
  - nlp 서버를 정상적으로 동작시키기 위해선 fine-tuning 된 모델, DataBase 가 필요합니다. <br />
  - 웹서버 NGINX 설정 또한 필요합니다. <br />
+ - 실시간 크롤링을 위해선 네이버, 구글, 다음 Open API Key 발급이 필요합니다.
  - 설치 환경을 Ubuntu 18.04 버전으로 가정 합니다. <br />
 
 react
@@ -26,22 +27,29 @@ flask
 ```python
 conda create -n <환경명> python=3.9.7
 conda activate <환경명>
-cd 2021-1-CECD3-SASO-2/front/src
 pip install -r requriements.txt
 ```
 
 ## Fine-tuning
+...
+추가예정
 ...
 
 ## 
 
 ## DB, 필요 라이브러리 설치, NGINX
 ...
-
-## Demo
+추가예정
 ...
 
+## Demo
+![영상파일](https://user-images.githubusercontent.com/66078685/144558506-197ec37d-622f-4355-b196-f570e3772614.gif) <br>
+![영상파일](https://user-images.githubusercontent.com/66078685/144559424-94c1ccff-0dc4-405e-bb62-f959a3e19a16.gif) <br>
+
+
+
+
 ## Developer
-장준표,  구미송,  최선욱
+🌲 장준표,  🌲 구미송,  🌲 최선욱
 
 
