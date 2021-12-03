@@ -1,0 +1,3 @@
+[submodule "front/src/shards-dashboard"]
+	path = front/src/shards-dashboard
+	url = https://github.com/DesignRevision/shards-dashboard.git
