@@ -13,6 +13,7 @@ import ComponentsOverview from "./views/ComponentsOverview";
 import Tables from "./views/Tables";
 import BlogPosts from "./views/BlogPosts";
 import keywordInput from "./views/keywordInput";
+import TestView from "./views/TestView";
 
 export default [
   {
@@ -60,5 +61,10 @@ export default [
     path: "/keyword-input",
     layout: DefaultLayout,
     component: keywordInput
+  },
+  {
+    path: "/test",
+    layout: DefaultLayout,
+    component: TestView
   }
 ];
