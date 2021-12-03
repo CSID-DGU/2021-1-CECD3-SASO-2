@@ -2,7 +2,7 @@
 🌲 NLP 감정 분석을 통한 마케팅 시장 분석
 
 ## Installation
- - react, flask 설치가 필요합니다. <br/>
+ - React, Flask 를 사용합니다. <br/>
  - 문장 전처리시 Khaiii 라이브러리를 사용하기 때문에 맥 혹은 리눅스 환경을 권장합니다. <br />
  - **huggingface transformer, sentence transformers, tokenizers** 라이브러리를 사용하기 때문에 가상환경(conda) 사용을 권장합니다. <br />
  - python 버전 문제로 ETRI KorBERT 에서 SKT KoGPT2로 변경하였습니다. <br />
@@ -13,17 +13,15 @@
  - 실시간 크롤링을 위해선 네이버, 구글, 다음 Open API Key 발급이 필요합니다.
  - 설치 환경을 Ubuntu 18.04 버전으로 가정 합니다. <br />
 
-react
+React
 ```
-git clone https://github.com/CSID-DGU/2021-1-CECD3-SASO-2.git
-cd 2021-1-CECD3-SASO-2/front/src
-git clone https://github.com/DesignRevision/shards-dashboard.git
-cd ../..
+git clone --recurse-submodules https://github.com/CSID-DGU/2021-1-CECD3-SASO-2.git
+cd 2021-1-CECD3-SASO-2/front
 npm install
 npm run build
 ```
 
-flask
+Flask
 ```python
 conda create -n <환경명> python=3.9.7
 conda activate <환경명>
@@ -31,8 +29,7 @@ pip install -r requriements.txt
 ```
 
 ## Fine-tuning
-...
-추가예정
+ - Fine-tuning 을 하기 위해선 Pre-train 된 모델이 필요합니다.<br />
 ...
 
 ## 
