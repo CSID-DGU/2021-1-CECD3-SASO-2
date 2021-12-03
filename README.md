@@ -29,7 +29,8 @@ pip install -r requriements.txt
 ```
 
 ## Fine-tuning
- - Fine-tuning 을 하기 위해선 Pre-train 된 모델이 필요합니다.<br />
+ - Fine-tuning 을 하기 위해선 Pre-training 된 모델이 필요합니다.<br />
+ - 하드웨어(GPU), Tensorflow=2.7 와 호환되는 NVIDA DRIVER, CUDA, CUDNN 설치를 권장합니다. <br />
 ...
 
 ## 
