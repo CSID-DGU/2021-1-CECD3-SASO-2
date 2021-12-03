@@ -30,7 +30,7 @@ cd 2021-1-CECD3-SASO-2/front/src
 pip install -r requriements.txt
 ```
 
-## Fine-Tuining
+## Fine-tuning
 ...
 
 ## 
