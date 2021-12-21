@@ -34,12 +34,6 @@ pip install -r requriements.txt
  - 하드웨어(GPU), Tensorflow=2.7 와 호환되는 NVIDIA DRIVER, CUDA, CUDNN 설치를 권장합니다. <br />
 ...
 
-## 
-
-## DB, 필요 라이브러리 설치, NGINX
-...
-추가예정
-...
 
 ## Demo
 ![영상파일](https://user-images.githubusercontent.com/66078685/144558506-197ec37d-622f-4355-b196-f570e3772614.gif) <br>
